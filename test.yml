@@ -10,7 +10,7 @@ spec:
   - image: ubuntu:latest
     name: ui-service
     resources: {}
-    command: 
+    command:
       - bash
     stdin: true
     tty: true

@@ -41,6 +41,9 @@ dependencies {
 	// https://mvnrepository.com/artifact/org.springframework.cloud/spring-cloud-starter-config
 	// implementation 'org.springframework.cloud:spring-cloud-starter-config:4.0.2'
 
+	// https://mvnrepository.com/artifact/org.springframework.kafka/spring-kafka
+	implementation 'org.springframework.kafka:spring-kafka:3.0.7'
+
 }
 
 tasks.named('test') {
