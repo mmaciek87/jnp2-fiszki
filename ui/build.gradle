@@ -22,13 +22,25 @@ dependencies {
 	// https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-web
 	implementation 'org.springframework.boot:spring-boot-starter-web:3.1.0'
 
-
 	// https://mvnrepository.com/artifact/org.projectlombok/lombok
 	compileOnly 'org.projectlombok:lombok:1.18.26'
 	annotationProcessor 'org.projectlombok:lombok:1.18.26'
 
 	// https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-actuator
 	implementation 'org.springframework.boot:spring-boot-starter-actuator:3.1.0'
+
+	// https://mvnrepository.com/artifact/org.springframework.cloud/spring-cloud-starter-openfeign
+    implementation 'org.springframework.cloud:spring-cloud-starter-openfeign:4.0.2'
+
+	// https://mvnrepository.com/artifact/org.springframework.cloud/spring-cloud-starter-loadbalancer
+	implementation 'org.springframework.cloud:spring-cloud-starter-loadbalancer:4.0.2'
+
+	// https://mvnrepository.com/artifact/org.springframework.cloud/spring-cloud-starter-kubernetes
+	implementation 'org.springframework.cloud:spring-cloud-starter-kubernetes:1.1.10.RELEASE'
+
+	// https://mvnrepository.com/artifact/org.springframework.cloud/spring-cloud-starter-config
+	// implementation 'org.springframework.cloud:spring-cloud-starter-config:4.0.2'
+
 }
 
 tasks.named('test') {

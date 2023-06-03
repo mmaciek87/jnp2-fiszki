@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  creationTimestamp: null
+  labels:
+    app: ui-service
+  name: test
+spec:
+  containers:
+  - image: ubuntu:latest
+    name: ui-service
+    resources: {}
+    command: 
+      - bash
+    stdin: true
+    tty: true
+status: {}

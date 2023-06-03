@@ -1,0 +1,89 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: ui-service
+  name: ui-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ui-service
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: ui-service
+    spec:
+      containers:
+      - image: ghcr.io/wiktoor/ui:latest
+        name: ui-service
+        imagePullPolicy: Always
+        resources: {}
+status: {}
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  creationTimestamp: null
+  labels:
+    app: ui-service
+  name: ui-service
+spec:
+  ports:
+  - name: 9900-9900
+    port: 80
+    protocol: TCP
+    targetPort: 8080
+  selector:
+    app: ui-service
+  type: ClusterIP
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: flashcards
+  name: flashcards
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: flashcards
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: flashcards
+    spec:
+      containers:
+      - image: ghcr.io/wiktoor/flashcards:latest
+        name: flashcards
+        resources: {}
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  creationTimestamp: null
+  labels:
+    app: flashcards
+  name: flashcards
+spec:
+  ports:
+  - name: 9800-9800
+    port: 80
+    protocol: TCP
+    targetPort: 8080
+  selector:
+    app: flashcards
+  type: ClusterIP
