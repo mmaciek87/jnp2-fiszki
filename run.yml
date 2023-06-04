@@ -41,7 +41,7 @@ spec:
     targetPort: 8080
   selector:
     app: ui-service
-  type: ClusterIP
+  type: LoadBalancer
 
 ---
 

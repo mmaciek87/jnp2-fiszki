@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -45,5 +46,25 @@ public class SampleController {
     public List<FlashcardDTO> read() {
         log.info("someone called /readFromDb endpoint");
         return flashcardsRepository.findAll();
+    }
+
+    @GetMapping("/name")
+    public TestDTO test(@RequestParam String name) {
+        return flashcardsFeignClient.test(name);
+    }
+
+    @GetMapping("/page")
+    public String page() {
+        return """
+                <!DOCTYPE html>
+                <html>
+                    <head>
+                        <title>Example</title>
+                    </head>
+                    <body>
+                        <p>This is an example of a simple HTML page with one paragraph.</p>
+                    </body>
+                </html>
+                """;
     }
 }
