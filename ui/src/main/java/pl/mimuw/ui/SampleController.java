@@ -6,6 +6,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @Slf4j
 @RestController
 @RequestMapping("/")
@@ -14,6 +16,7 @@ public class SampleController {
 
     private final FlashcardsFeignClient flashcardsFeignClient;
     private final FlashcardsService flashcardsService;
+    private final FlashcardsRepository flashcardsRepository;
 
     @GetMapping("/hello")
     public String sayHello() {
@@ -25,5 +28,22 @@ public class SampleController {
     public String sayHello1() {
         log.info("someone called /hello1 endpoint");
         return flashcardsFeignClient.sayHello();
+    }
+
+    @GetMapping("/saveToDb")
+    public void save() {
+        log.info("someone called /saveToDb endpoint");
+        flashcardsRepository.save(
+                FlashcardDTO.builder()
+                        .id(1L)
+                        .name("jeden")
+                        .build()
+        );
+    }
+
+    @GetMapping("/readFromDb")
+    public List<FlashcardDTO> read() {
+        log.info("someone called /readFromDb endpoint");
+        return flashcardsRepository.findAll();
     }
 }
