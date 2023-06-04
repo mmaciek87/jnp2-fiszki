@@ -1,19 +1,16 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  creationTimestamp: null
   labels:
     app: ui-service
   name: ui-service
 spec:
-  replicas: 1
+  replicas: 0
   selector:
     matchLabels:
       app: ui-service
-  strategy: {}
   template:
     metadata:
-      creationTimestamp: null
       labels:
         app: ui-service
     spec:
@@ -22,20 +19,18 @@ spec:
         name: ui-service
         imagePullPolicy: Always
         resources: {}
-status: {}
 
 ---
 
 apiVersion: v1
 kind: Service
 metadata:
-  creationTimestamp: null
   labels:
     app: ui-service
   name: ui-service
 spec:
   ports:
-  - name: 9900-9900
+  - name: http
     port: 80
     protocol: TCP
     targetPort: 8080
@@ -48,19 +43,16 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  creationTimestamp: null
   labels:
     app: flashcards
   name: flashcards
 spec:
-  replicas: 1
+  replicas: 0
   selector:
     matchLabels:
       app: flashcards
-  strategy: {}
   template:
     metadata:
-      creationTimestamp: null
       labels:
         app: flashcards
     spec:
@@ -74,13 +66,12 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  creationTimestamp: null
   labels:
     app: flashcards
   name: flashcards
 spec:
   ports:
-  - name: 9800-9800
+  - name: http
     port: 80
     protocol: TCP
     targetPort: 8080
@@ -89,14 +80,15 @@ spec:
   type: ClusterIP
 
 ---
+
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: zookeeper-deployment
   labels:
     app: zookeeper
+  name: zookeeper-deployment
 spec:
-  replicas: 1
+  replicas: 0
   selector:
     matchLabels:
       app: zookeeper
@@ -115,7 +107,9 @@ spec:
           value: "2181"
         - name: ZOOKEEPER_TICK_TIME
           value: "2000"
+
 ---
+
 apiVersion: v1
 kind: Service
 metadata:
@@ -127,16 +121,18 @@ spec:
     - protocol: TCP
       port: 2181
       targetPort: 2181
+  type: ClusterIP
 
 ---
-kind: Deployment
+
 apiVersion: apps/v1
+kind: Deployment
 metadata:
-  name: kafka-deployment
   labels:
     app: kafka
+  name: kafka-deployment
 spec:
-  replicas: 1
+  replicas: 0
   selector:
     matchLabels:
       app: kafka
@@ -165,30 +161,35 @@ spec:
           value: "1"
         - name: KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR
           value: "1"
+
 ---
+
 apiVersion: v1
 kind: Service
 metadata:
   name: kafka-service
 spec:
-  type: ClusterIP
   selector:
     app: kafka
   ports:
     - protocol: TCP
       port: 9092
       targetPort: 9092
+  type: ClusterIP
 
 ---
+
 apiVersion: apps/v1
 kind: Deployment
 metadata:
+  labels:
+    app: mongodb
   name: mongodb
 spec:
+  replicas: 0
   selector:
     matchLabels:
       app: mongodb
-  replicas: 1
   template:
     metadata:
       labels:
@@ -205,7 +206,9 @@ spec:
       volumes:
         - name: mongo-data
           emptyDir: {}
+
 ---
+
 apiVersion: v1
 kind: Service
 metadata:
@@ -217,4 +220,4 @@ spec:
     - protocol: TCP
       port: 27017
       targetPort: 27017
-  type: LoadBalancer
+  type: ClusterIP
