@@ -21,6 +21,7 @@ public class SampleController {
     private final FlashcardsFeignClient flashcardsFeignClient;
     private final FlashcardsService flashcardsService;
     private final FlashcardsRepository flashcardsRepository;
+    private final KafkaTemplate<String, String> kafkaTemplate;
 
     @GetMapping("/hello")
     public String sayHello() {
@@ -70,9 +71,6 @@ public class SampleController {
                 </html>
                 """;
     }
-
-    @Autowired
-    private KafkaTemplate<String, String> kafkaTemplate;
 
     @GetMapping("/sendToKafka")
     public void sendToKafka() {
