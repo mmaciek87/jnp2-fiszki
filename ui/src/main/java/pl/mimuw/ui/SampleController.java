@@ -7,6 +7,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.kafka.core.KafkaTemplate;
+
 import java.util.List;
 
 @Slf4j
@@ -66,5 +69,14 @@ public class SampleController {
                     </body>
                 </html>
                 """;
+    }
+
+    @Autowired
+    private KafkaTemplate<String, String> kafkaTemplate;
+
+    @GetMapping("/sendToKafka")
+    public void sendToKafka() {
+        kafkaTemplate.send("topic", "testMessage");
+        log.info("sent test message to kafka");
     }
 }
