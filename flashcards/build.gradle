@@ -33,6 +33,8 @@ dependencies {
 	implementation("org.springframework.data:spring-data-mongodb")
 	implementation('org.springframework.boot:spring-boot-starter-data-mongodb')
 
+	// https://mvnrepository.com/artifact/org.springframework.kafka/spring-kafka
+	implementation 'org.springframework.kafka:spring-kafka:3.0.7'
 }
 
 tasks.named('test') {
