@@ -6,6 +6,8 @@ import org.springframework.data.annotation.Id;
 @Builder
 public record FlashcardDTO(
         @Id Long id,
-        String name
+        Long creatorId,
+        String term,
+        String definition
 ) {
 }

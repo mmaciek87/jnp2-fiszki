@@ -2,10 +2,7 @@ package pl.mimuw.ui;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import org.springframework.kafka.core.KafkaTemplate;
 
@@ -21,6 +18,7 @@ public class SampleController {
     private final FlashcardsService flashcardsService;
     private final FlashcardsRepository flashcardsRepository;
     private final KafkaTemplate<String, String> kafkaTemplate;
+    private final UsersFeignClient usersFeignClient;
 
     @GetMapping("/hello")
     public String sayHello() {
@@ -40,7 +38,6 @@ public class SampleController {
         flashcardsRepository.save(
                 FlashcardDTO.builder()
                         .id(1L)
-                        .name("jeden")
                         .build()
         );
     }
@@ -75,5 +72,21 @@ public class SampleController {
     public void sendToKafka() {
         kafkaTemplate.send("topic", "testMessage");
         log.info("sent test message to kafka");
+    }
+
+    @PostMapping
+    public void addCardsToSet(
+            @RequestHeader Long userId,
+            @RequestParam Long setId,
+            @RequestParam List<FlashcardDTO> flashcardsToAdd
+    ) {
+        if (!usersFeignClient.isOwner(userId, setId)) return;
+        flashcardsToAdd.forEach(flashcard ->
+                    flashcardsFeignClient.createFlashcard(
+                            userId,
+                            flashcard.term(),
+                            flashcard.definition(),
+                            setId
+                    ));
     }
 }

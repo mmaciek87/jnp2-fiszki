@@ -18,13 +18,13 @@ COPY src/ src/
 RUN gradle --no-daemon build
 
 # Use a lightweight base image for the final application
-FROM adoptopenjdk:11-jre-hotspot
+FROM eclipse-temurin:17-jdk
 
 # Set the working directory
 WORKDIR /app
 
 # Copy the built JAR file from the builder stage
-COPY --from=builder /app/build/libs/your-app.jar .
+COPY --from=builder /app/build/libs/users-0.0.1-SNAPSHOT.jar ./your-app.jar
 
 # Set the command to run the application
 CMD ["java", "-jar", "your-app.jar"]
