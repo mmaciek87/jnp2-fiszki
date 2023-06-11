@@ -18,4 +18,7 @@ public interface UsersFeignClient {
             @RequestParam String userId,
             @RequestParam String setId
     );
+
+    @PostMapping("/create")
+    String createUser(@RequestParam String nickname);
 }
