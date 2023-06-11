@@ -60,6 +60,13 @@ spec:
       - image: ghcr.io/wiktoor/flashcards:latest
         name: flashcards
         resources: {}
+        env:
+        - name: SPRING_DATA_MONGODB_HOST
+          value: mongodb
+        - name: SPRING_DATA_MONGODB_PORT
+          value: 27017
+        - name: SPRING_DATA_MONGODB_DATABASE
+          value: flashcards
 
 ---
 
