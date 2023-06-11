@@ -9,13 +9,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 public interface UsersFeignClient {
     @GetMapping("/isOwner")
     boolean isOwner(
-            @RequestParam Long userId,
-            @RequestParam Long setId
+            @RequestParam String userId,
+            @RequestParam String setId
     );
 
     @PostMapping("/markUserAsOwner")
     void markUserAsOwner(
-            @RequestParam Long userId,
-            @RequestParam Long setId
+            @RequestParam String userId,
+            @RequestParam String setId
     );
 }
