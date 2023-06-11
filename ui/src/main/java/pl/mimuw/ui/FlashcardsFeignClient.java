@@ -31,4 +31,10 @@ public interface FlashcardsFeignClient {
             @RequestParam String definition,
             @RequestParam Long setId
     );
+
+    @PostMapping("/set/create")
+    Long createSet(
+            @RequestParam Long creatorId,
+            @RequestParam String name
+    );
 }

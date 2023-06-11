@@ -74,7 +74,7 @@ public class SampleController {
         log.info("sent test message to kafka");
     }
 
-    @PostMapping
+    @PostMapping("/set/addCards")
     public void addCardsToSet(
             @RequestHeader Long userId,
             @RequestParam Long setId,
@@ -88,5 +88,14 @@ public class SampleController {
                             flashcard.definition(),
                             setId
                     ));
+    }
+
+    @PostMapping("/set/create")
+    public void createSet(
+            @RequestHeader Long userId,
+            @RequestParam String name
+    ) {
+        var setId = flashcardsFeignClient.createSet(userId, name);
+        usersFeignClient.markUserAsOwner(userId, setId);
     }
 }
