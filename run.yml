@@ -160,6 +160,15 @@ spec:
       - image: ghcr.io/wiktoor/users:latest
         name: users
         resources: {}
+        env:
+        - name: SPRING_DATA_MONGODB_HOST
+          value: mongodb
+        - name: SPRING_DATA_MONGODB_PORT
+          value: "27017"
+        - name: SPRING_DATA_MONGODB_DATABASE
+          value: users
+        - name: SPRING_KAFKA_BOOTSTRAPSERVERS
+          value: localhost:9092,kafka-service:9092
 
 ---
 
