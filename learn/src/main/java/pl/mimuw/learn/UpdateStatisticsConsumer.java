@@ -23,7 +23,7 @@ public class UpdateStatisticsConsumer {
                     userAnswer.correct()
             );
         } catch (Exception e) {
-            log.error("exception occured while parsing json", e);
+            log.error("exception occurred while parsing json", e);
         }
     }
 }
