@@ -4,11 +4,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
-import org.springframework.kafka.core.KafkaTemplate;
 import pl.mimuw.ui.feign.FlashcardsFeignClient;
 import pl.mimuw.ui.feign.UsersFeignClient;
-
-import java.util.List;
 
 @Slf4j
 @RestController
@@ -17,24 +14,25 @@ import java.util.List;
 public class SampleController {
 
     private final FlashcardsFeignClient flashcardsFeignClient;
-    private final FlashcardsRepository flashcardsRepository;
-    private final KafkaTemplate<String, String> kafkaTemplate;
     private final UsersFeignClient usersFeignClient;
 
-    @PostMapping("/set/addCards")
-    public void addCardsToSet(
+    @PostMapping("/flashcard/create")
+    public String createFlashcard(
             @RequestHeader String userId,
             @RequestParam String setId,
-            @RequestParam List<FlashcardDTO> flashcardsToAdd
+            @RequestParam String term,
+            @RequestParam String definition
     ) {
-        if (!usersFeignClient.isOwner(userId, setId)) return;
-        flashcardsToAdd.forEach(flashcard ->
-                    flashcardsFeignClient.createFlashcard(
-                            userId,
-                            flashcard.term(),
-                            flashcard.definition(),
-                            setId
-                    ));
+        if (!usersFeignClient.isOwner(userId, setId)) {
+            log.info("user {} trying to access set {}", userId, setId);
+            return "";
+        }
+        return flashcardsFeignClient.createFlashcard(
+                userId,
+                term,
+                definition,
+                setId
+        );
     }
 
     @PostMapping("/set/create")
