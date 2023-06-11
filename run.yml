@@ -72,6 +72,56 @@ spec:
 
 ---
 
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: learn
+  name: learn
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: learn
+  template:
+    metadata:
+      labels:
+        app: learn
+    spec:
+      containers:
+      - image: ghcr.io/wiktoor/learn:latest
+        name: learn
+        resources: {}
+        env:
+        - name: SPRING_DATA_MONGODB_HOST
+          value: mongodb
+        - name: SPRING_DATA_MONGODB_PORT
+          value: "27017"
+        - name: SPRING_DATA_MONGODB_DATABASE
+          value: learn
+        - name: SPRING_KAFKA_BOOTSTRAPSERVERS
+          value: localhost:9092,kafka-service:9092
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: learn
+  name: learn
+spec:
+  ports:
+  - name: http
+    port: 80
+    protocol: TCP
+    targetPort: 8080
+  selector:
+    app: learn
+  type: LoadBalancer
+
+---
+
 apiVersion: v1
 kind: Service
 metadata:
