@@ -11,7 +11,7 @@ public class UsersController {
     private final UsersRepository usersRepository;
 
     @PostMapping("/create")
-    public Long createUser(@RequestParam String nickname) {
+    public String createUser(@RequestParam String nickname) {
         return usersRepository.save(
                 UserDTO.builder()
                         .nickname(nickname)

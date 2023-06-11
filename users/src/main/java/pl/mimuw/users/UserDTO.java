@@ -5,7 +5,7 @@ import org.springframework.data.annotation.Id;
 
 @Builder
 public record UserDTO(
-        @Id Long userId,
+        @Id String userId,
         String nickname
 ) {
 }

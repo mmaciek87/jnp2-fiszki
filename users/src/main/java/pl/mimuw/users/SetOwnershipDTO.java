@@ -5,7 +5,7 @@ import org.springframework.data.annotation.Id;
 
 @Builder
 public record SetOwnershipDTO(
-        @Id Long setId,
-        Long ownerId
+        @Id String setId,
+        String ownerId
 ) {
 }

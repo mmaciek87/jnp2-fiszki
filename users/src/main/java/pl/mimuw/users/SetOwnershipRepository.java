@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface SetOwnershipRepository extends MongoRepository<SetOwnershipDTO, Long> {
-    List<SetOwnershipDTO> findAllByOwnerId(Long ownerId);
+public interface SetOwnershipRepository extends MongoRepository<SetOwnershipDTO, String> {
+    List<SetOwnershipDTO> findAllByOwnerId(String ownerId);
 }

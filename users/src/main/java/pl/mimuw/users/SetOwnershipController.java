@@ -12,8 +12,8 @@ public class SetOwnershipController {
 
     @PostMapping("/markUserAsOwner")
     public void markUserAsOwner(
-            @RequestParam Long userId,
-            @RequestParam Long setId
+            @RequestParam String userId,
+            @RequestParam String setId
     ) {
         setOwnershipRepository.save(
             SetOwnershipDTO.builder()
@@ -25,8 +25,8 @@ public class SetOwnershipController {
 
     @GetMapping("/isOwner")
     public boolean isOwner(
-            @RequestParam Long userId,
-            @RequestParam Long setId
+            @RequestParam String userId,
+            @RequestParam String setId
     ) {
         var set = setOwnershipRepository.findById(setId);
         return set.isPresent() && set.get().ownerId().equals(userId);
@@ -34,13 +34,13 @@ public class SetOwnershipController {
 
     @DeleteMapping("/deleteSet")
     public void deleteSet(
-            @RequestParam Long setId
+            @RequestParam String setId
     ) {
         setOwnershipRepository.deleteById(setId);
     }
 
     @GetMapping("/allSets")
-    public List<Long> allUserSets(@RequestParam Long userId) {
+    public List<String> allUserSets(@RequestParam String userId) {
         return setOwnershipRepository.findAllByOwnerId(userId).stream()
                 .map(SetOwnershipDTO::setId)
                 .toList();
