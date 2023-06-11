@@ -1,5 +1,6 @@
 package pl.mimuw.ui;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
@@ -19,6 +20,7 @@ public class SampleController {
     private final FlashcardsRepository flashcardsRepository;
     private final KafkaTemplate<String, String> kafkaTemplate;
     private final UsersFeignClient usersFeignClient;
+    private final ObjectMapper objectMapper;
 
     @GetMapping("/hello")
     public String sayHello() {
