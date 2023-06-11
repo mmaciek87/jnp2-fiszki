@@ -5,7 +5,7 @@ metadata:
     app: ui-service
   name: ui-service
 spec:
-  replicas: 0
+  replicas: 1
   selector:
     matchLabels:
       app: ui-service
@@ -47,7 +47,7 @@ metadata:
     app: flashcards
   name: flashcards
 spec:
-  replicas: 0
+  replicas: 1
   selector:
     matchLabels:
       app: flashcards
@@ -77,7 +77,7 @@ spec:
     targetPort: 8080
   selector:
     app: flashcards
-  type: ClusterIP
+  type: LoadBalancer
 
 ---
 
@@ -88,7 +88,7 @@ metadata:
     app: users
   name: users
 spec:
-  replicas: 0
+  replicas: 1
   selector:
     matchLabels:
       app: users
@@ -118,7 +118,7 @@ spec:
     targetPort: 8080
   selector:
     app: users
-  type: ClusterIP
+  type: LoadBalancer
 
 ---
 
@@ -129,7 +129,7 @@ metadata:
     app: zookeeper
   name: zookeeper-deployment
 spec:
-  replicas: 0
+  replicas: 1
   selector:
     matchLabels:
       app: zookeeper
@@ -162,7 +162,7 @@ spec:
     - protocol: TCP
       port: 2181
       targetPort: 2181
-  type: ClusterIP
+  type: LoadBalancer
 
 ---
 
@@ -173,7 +173,7 @@ metadata:
     app: kafka
   name: kafka-deployment
 spec:
-  replicas: 0
+  replicas: 1
   selector:
     matchLabels:
       app: kafka
@@ -216,7 +216,7 @@ spec:
     - protocol: TCP
       port: 9092
       targetPort: 9092
-  type: ClusterIP
+  type: LoadBalancer
 
 ---
 
@@ -227,7 +227,7 @@ metadata:
     app: mongodb
   name: mongodb
 spec:
-  replicas: 0
+  replicas: 1
   selector:
     matchLabels:
       app: mongodb
@@ -261,4 +261,4 @@ spec:
     - protocol: TCP
       port: 27017
       targetPort: 27017
-  type: ClusterIP
+  type: LoadBalancer

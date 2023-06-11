@@ -17,14 +17,14 @@ public class StatisticUpdateProducer {
     private static final String topicName = "flashcards";
 
 
-    public static void flashcardDeleted(Long flashcardId) {
+    public static void flashcardDeleted(String flashcardId) {
         var message = new FlashcardDeleteMessage();
         message.setFlashcardId(flashcardId);
         fDeleteTemplate.send(topicName, message);
         log.info("Kafka message: deleted flashcard {}", flashcardId);
     }
 
-    public static void setEdited(Long setId, List<Long> cardsToAdd, List<Long> cardsToDelete) {
+    public static void setEdited(String setId, List<String> cardsToAdd, List<String> cardsToDelete) {
         var message = new SetEditMessage();
         message.setSetId(setId);
         message.setAddedIds(cardsToAdd);
@@ -33,7 +33,7 @@ public class StatisticUpdateProducer {
         log.info("Kafka message: edited set {}", setId);
     }
 
-    public static void setRemoved(Long setId) {
+    public static void setRemoved(String setId) {
         var message = new SetDeleteMessage();
         message.setSetId(setId);
         sDeleteTemplate.send(topicName, message);

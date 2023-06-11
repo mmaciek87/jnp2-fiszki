@@ -9,9 +9,9 @@ import java.util.List;
 @Builder
 @With
 public record FlashcardSetDTO(
-        @Id Long id,
-        Long creatorId,
+        @Id String id,
+        String creatorId,
         String name,
-        List<Long> flashcardIds
+        List<String> flashcardIds
 ) {
 }

@@ -23,14 +23,14 @@ public class FlashcardController {
     private final StatisticUpdateProducer statisticUpdateProducer;
 
     @GetMapping("/set/{setId}")
-    public FlashcardSetDTO getSet(@PathVariable Long setId) {
+    public FlashcardSetDTO getSet(@PathVariable String setId) {
         log.info("set endpoint was called");
         return flashcardSetRepository.findById(setId).orElse(null);
     }
 
     @PostMapping("/set/create")
-    public Long createSet(
-            @RequestParam Long creatorId,
+    public String createSet(
+            @RequestParam String creatorId,
             @RequestParam String name) {
         log.info("set/create endpoint was called");
         return flashcardSetRepository.save(
@@ -44,10 +44,10 @@ public class FlashcardController {
 
     @GetMapping("/set/edit")
     public void editSet(
-            @RequestParam Long setId,
+            @RequestParam String setId,
             @RequestParam(required = false) String name,
-            @RequestParam(required = false) List<Long> cardsToAdd,
-            @RequestParam(required = false) List<Long> cardsToDelete
+            @RequestParam(required = false) List<String> cardsToAdd,
+            @RequestParam(required = false) List<String> cardsToDelete
     ) {
         log.info("set/edit endpoint was called, id: {}", setId);
         var flashcardSetOptional = flashcardSetRepository.findById(setId);
@@ -71,7 +71,7 @@ public class FlashcardController {
 
     @GetMapping("/set/delete")
     public void deleteSet(
-            @RequestParam Long setId
+            @RequestParam String setId
     ) {
         log.info("set/delete endpoint was called, id: {}", setId);
         flashcardSetRepository.deleteById(setId);
@@ -79,16 +79,16 @@ public class FlashcardController {
     }
 
     @GetMapping("/flashcards")
-    public List<FlashcardDTO> getFlashcards(@RequestParam List<Long> flashcardIds) {
+    public List<FlashcardDTO> getFlashcards(@RequestParam List<String> flashcardIds) {
         log.info("flashcards endpoint was called");
         return flashcardsRepository.findAllById(flashcardIds);
     }
     @PostMapping("/flashcards/create")
-    public Long createFlashcard(
-            @RequestParam Long creatorId,
+    public String createFlashcard(
+            @RequestParam String creatorId,
             @RequestParam String term,
             @RequestParam String definition,
-            @RequestParam Long setId
+            @RequestParam String setId
     ) {
         log.info("flashcards/create endpoint was called");
         var flashcard = flashcardsRepository.save(
@@ -109,7 +109,7 @@ public class FlashcardController {
     }
     @GetMapping("/flashcards/delete")
     public void deleteFlashcard(
-            @RequestParam Long flashcardId
+            @RequestParam String flashcardId
     ) {
         log.info("flashcards/delete endpoint was called, id: {}", flashcardId);
         flashcardsRepository.deleteById(flashcardId);

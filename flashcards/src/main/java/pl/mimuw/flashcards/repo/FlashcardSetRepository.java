@@ -5,5 +5,5 @@ import org.springframework.stereotype.Repository;
 import pl.mimuw.flashcards.repo.model.FlashcardSetDTO;
 
 @Repository
-public interface FlashcardSetRepository extends MongoRepository<FlashcardSetDTO, Long> {
+public interface FlashcardSetRepository extends MongoRepository<FlashcardSetDTO, String> {
 }

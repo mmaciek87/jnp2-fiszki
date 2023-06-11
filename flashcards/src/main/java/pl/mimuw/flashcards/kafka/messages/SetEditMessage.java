@@ -5,7 +5,7 @@ import java.util.List;
 
 @Data
 public class SetEditMessage {
-    private Long setId;
-    private List<Long> addedIds;
-    private List<Long> removedIds;
+    private String setId;
+    private List<String> addedIds;
+    private List<String> removedIds;
 }

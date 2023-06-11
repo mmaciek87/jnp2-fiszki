@@ -4,5 +4,5 @@ import lombok.Data;
 
 @Data
 public class FlashcardDeleteMessage {
-    private Long flashcardId;
+    private String flashcardId;
 }
