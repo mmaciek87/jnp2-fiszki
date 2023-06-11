@@ -26,7 +26,7 @@ public class StatisticUpdateProducer {
         log.info("Kafka message: deleted flashcard {}", flashcardId);
     }
 
-    public void setEdited(String setId, List<Long> cardsToAdd, List<Long> cardsToDelete) {
+    public void setEdited(String setId, List<String> cardsToAdd, List<String> cardsToDelete) {
         var message = new SetEditMessage();
         message.setSetId(setId);
         message.setAddedIds(cardsToAdd);
