@@ -67,6 +67,8 @@ spec:
           value: 27017
         - name: SPRING_DATA_MONGODB_DATABASE
           value: flashcards
+        - name: SPRING_KAFKA_BOOTSTRAPSERVERS
+          value: localhost:9092,kafka-service:9092
 
 ---
 
