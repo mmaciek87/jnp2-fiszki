@@ -66,7 +66,7 @@ public class FlashcardController {
         }
         flashcardSet = flashcardSet.withFlashcardIds(flashcards);
         flashcardSetRepository.save(flashcardSet);
-        StatisticUpdateProducer.setEdited(setId, cardsToAdd, cardsToDelete);
+        statisticUpdateProducer.setEdited(setId, cardsToAdd, cardsToDelete);
     }
 
     @GetMapping("/set/delete")
@@ -75,7 +75,7 @@ public class FlashcardController {
     ) {
         log.info("set/delete endpoint was called, id: {}", setId);
         flashcardSetRepository.deleteById(setId);
-        StatisticUpdateProducer.setRemoved(setId);
+        statisticUpdateProducer.setRemoved(setId);
     }
 
     @GetMapping("/flashcards")
@@ -113,6 +113,6 @@ public class FlashcardController {
     ) {
         log.info("flashcards/delete endpoint was called, id: {}", flashcardId);
         flashcardsRepository.deleteById(flashcardId);
-        StatisticUpdateProducer.flashcardDeleted(flashcardId);
+        statisticUpdateProducer.flashcardDeleted(flashcardId);
     }
 }

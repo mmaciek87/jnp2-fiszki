@@ -1,5 +1,6 @@
 package pl.mimuw.flashcards.kafka;
 
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import java.util.List;
@@ -9,34 +10,35 @@ import pl.mimuw.flashcards.kafka.messages.*;
 
 @Slf4j
 @Component
+@RequiredArgsConstructor
 public class StatisticUpdateProducer {
 
-    private static KafkaTemplate<String, FlashcardDeleteMessage> fDeleteTemplate;
-    private static KafkaTemplate<String, SetDeleteMessage> sDeleteTemplate;
-    private static KafkaTemplate<String, SetEditMessage> sEditTemplate;
-    private static final String topicName = "flashcards";
+    private final KafkaTemplate<String, FlashcardDeleteMessage> fDeleteTemplate;
+    private final KafkaTemplate<String, SetDeleteMessage> sDeleteTemplate;
+    private final KafkaTemplate<String, SetEditMessage> sEditTemplate;
+    private static final String TOPIC_NAME = "flashcards";
 
 
-    public static void flashcardDeleted(String flashcardId) {
+    public void flashcardDeleted(String flashcardId) {
         var message = new FlashcardDeleteMessage();
         message.setFlashcardId(flashcardId);
-        fDeleteTemplate.send(topicName, message);
+        fDeleteTemplate.send(TOPIC_NAME, message);
         log.info("Kafka message: deleted flashcard {}", flashcardId);
     }
 
-    public static void setEdited(String setId, List<String> cardsToAdd, List<String> cardsToDelete) {
+    public void setEdited(String setId, List<Long> cardsToAdd, List<Long> cardsToDelete) {
         var message = new SetEditMessage();
         message.setSetId(setId);
         message.setAddedIds(cardsToAdd);
         message.setRemovedIds(cardsToDelete);
-        sEditTemplate.send(topicName, message);
+        sEditTemplate.send(TOPIC_NAME, message);
         log.info("Kafka message: edited set {}", setId);
     }
 
-    public static void setRemoved(String setId) {
+    public void setRemoved(String setId) {
         var message = new SetDeleteMessage();
         message.setSetId(setId);
-        sDeleteTemplate.send(topicName, message);
+        sDeleteTemplate.send(TOPIC_NAME, message);
         log.info("Kafka message: removed set {}", setId);
     }
 }
