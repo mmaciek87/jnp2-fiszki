@@ -118,7 +118,7 @@ spec:
     targetPort: 8080
   selector:
     app: learn
-  type: LoadBalancer
+  type: ClusterIP
 
 ---
 
@@ -136,7 +136,7 @@ spec:
     targetPort: 8080
   selector:
     app: flashcards
-  type: LoadBalancer
+  type: ClusterIP
 
 ---
 
@@ -186,7 +186,7 @@ spec:
     targetPort: 8080
   selector:
     app: users
-  type: LoadBalancer
+  type: ClusterIP
 
 ---
 
@@ -230,7 +230,7 @@ spec:
     - protocol: TCP
       port: 2181
       targetPort: 2181
-  type: LoadBalancer
+  type: ClusterIP
 
 ---
 
@@ -329,4 +329,4 @@ spec:
     - protocol: TCP
       port: 27017
       targetPort: 27017
-  type: LoadBalancer
+  type: ClusterIP
