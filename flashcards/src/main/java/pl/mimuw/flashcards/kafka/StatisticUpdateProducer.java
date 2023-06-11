@@ -1,5 +1,6 @@
 package pl.mimuw.flashcards.kafka;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -13,17 +14,19 @@ import pl.mimuw.flashcards.kafka.messages.*;
 @RequiredArgsConstructor
 public class StatisticUpdateProducer {
 
-    private final KafkaTemplate<String, FlashcardDeleteMessage> fDeleteTemplate;
-    private final KafkaTemplate<String, SetDeleteMessage> sDeleteTemplate;
-    private final KafkaTemplate<String, SetEditMessage> sEditTemplate;
-    private static final String TOPIC_NAME = "flashcards";
+    private final KafkaTemplate<String, String> kafkaTemplate;
 
+    private final ObjectMapper objectMapper;
 
-    public void flashcardDeleted(String flashcardId) {
+    public void flashcardDeleted(String flashcardId){
         var message = new FlashcardDeleteMessage();
         message.setFlashcardId(flashcardId);
-        fDeleteTemplate.send(TOPIC_NAME, message);
-        log.info("Kafka message: deleted flashcard {}", flashcardId);
+        try {
+            kafkaTemplate.send("flashcardDeleted", objectMapper.writeValueAsString(message));
+            log.info("Kafka message: {}", objectMapper.writeValueAsString(message));
+        } catch(Exception e) {
+            log.info("Error while sending kafka message: ", e);
+        }
     }
 
     public void setEdited(String setId, List<String> cardsToAdd, List<String> cardsToDelete) {
@@ -31,14 +34,22 @@ public class StatisticUpdateProducer {
         message.setSetId(setId);
         message.setAddedIds(cardsToAdd);
         message.setRemovedIds(cardsToDelete);
-        sEditTemplate.send(TOPIC_NAME, message);
-        log.info("Kafka message: edited set {}", setId);
+        try {
+            kafkaTemplate.send("setEdited", objectMapper.writeValueAsString(message));
+            log.info("Kafka message: {}", objectMapper.writeValueAsString(message));
+        } catch(Exception e) {
+            log.info("Error while sending kafka message: ", e);
+        }
     }
 
     public void setRemoved(String setId) {
         var message = new SetDeleteMessage();
         message.setSetId(setId);
-        sDeleteTemplate.send(TOPIC_NAME, message);
-        log.info("Kafka message: removed set {}", setId);
+        try {
+            kafkaTemplate.send("setDeleted", objectMapper.writeValueAsString(message));
+            log.info("Kafka message: {}", objectMapper.writeValueAsString(message));
+        } catch(Exception e) {
+            log.info("Error while sending kafka message: ", e);
+        }
     }
 }
