@@ -1,4 +1,4 @@
-package pl.mimuw.ui;
+package pl.mimuw.ui.feign;
 
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;

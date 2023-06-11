@@ -1,11 +1,12 @@
 package pl.mimuw.ui;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
 import org.springframework.kafka.core.KafkaTemplate;
+import pl.mimuw.ui.feign.FlashcardsFeignClient;
+import pl.mimuw.ui.feign.UsersFeignClient;
 
 import java.util.List;
 
@@ -20,7 +21,6 @@ public class SampleController {
     private final FlashcardsRepository flashcardsRepository;
     private final KafkaTemplate<String, String> kafkaTemplate;
     private final UsersFeignClient usersFeignClient;
-    private final ObjectMapper objectMapper;
 
     @GetMapping("/hello")
     public String sayHello() {
@@ -39,7 +39,7 @@ public class SampleController {
         log.info("someone called /saveToDb endpoint");
         flashcardsRepository.save(
                 FlashcardDTO.builder()
-                        .id(1L)
+                        .id("1L")
                         .build()
         );
     }
