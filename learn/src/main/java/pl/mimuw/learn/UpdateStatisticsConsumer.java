@@ -16,6 +16,7 @@ public class UpdateStatisticsConsumer {
     @KafkaListener(id = "${spring.application.name}", topics = "${learn.topic}")
     public void handleAnswer(String message) {
         try {
+            log.info("received a message via MQ: {}", message);
             var userAnswer = objectMapper.readValue(message, UserAnswer.class);
             updateStatisticsService.handleAnswer(
                     userAnswer.userId(),

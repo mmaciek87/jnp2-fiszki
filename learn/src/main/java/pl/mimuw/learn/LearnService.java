@@ -15,6 +15,21 @@ public class LearnService {
             String userId,
             List<String> flashcardIds
     ) {
+        flashcardIds.forEach(flashcardId -> {
+            userPerformanceRepository.findById(flashcardId).ifPresentOrElse(
+                    flashcard -> {},
+                    () ->
+                        userPerformanceRepository.save(
+                                UserPerformanceDTO.builder()
+                                        .id(UserPerformanceDTO.generateId(userId, flashcardId))
+                                        .flashcardId(flashcardId)
+                                        .numberOfHits(0)
+                                        .numberOfTries(0)
+                                        .userId(userId)
+                                        .build()
+                        )
+            );
+        });
         return userPerformanceRepository.findAllByUserIdAndFlashcardIdIn(userId, flashcardIds).stream()
                 .sorted(Comparator.comparing(UserPerformanceDTO::getHitRate))
                 .map(UserPerformanceDTO::flashcardId)

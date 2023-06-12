@@ -36,11 +36,12 @@ public class SampleController {
     }
 
     @PostMapping("/set/create")
-    public void createSet(
+    public String createSet(
             @RequestHeader String userId,
             @RequestParam String name
     ) {
         var setId = flashcardsFeignClient.createSet(userId, name);
         usersFeignClient.markUserAsOwner(userId, setId);
+        return setId;
     }
 }
