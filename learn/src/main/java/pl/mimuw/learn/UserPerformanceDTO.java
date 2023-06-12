@@ -2,10 +2,12 @@ package pl.mimuw.learn;
 
 import lombok.Builder;
 import lombok.With;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.annotation.Id;
 
 @Builder
 @With
+@Slf4j
 public record UserPerformanceDTO(
         @Id String id,
         String userId,
@@ -14,9 +16,11 @@ public record UserPerformanceDTO(
         Integer numberOfTries
 ) {
     public Double getHitRate() {
-        return numberOfTries == 0
+        Double result = numberOfTries == 0
                 ? 0
                 : numberOfHits.doubleValue() / numberOfTries.doubleValue();
+        log.info("got hit rate = {}", result);
+        return result;
     }
 
     public static String generateId(String userId, String flashcardId) {
