@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -36,7 +37,7 @@ public class LearnService {
         });
         var x = userPerformanceRepository.findAllByUserIdAndFlashcardIdIn(userId, flashcardIds);
         log.info("result before sorting: {}", printList(x));
-        x.sort((up1, up2) -> Double.valueOf(up1.getHitRate() - up2.getHitRate()).intValue());
+        x.sort(Comparator.comparingDouble(UserPerformanceDTO::getHitRate));
         log.info("result after sorting: {}", printList(x));
         var result = x.stream().map(UserPerformanceDTO::flashcardId).toList();
         log.info("result ids: {}", result);
