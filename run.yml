@@ -79,7 +79,7 @@ metadata:
     app: learn
   name: learn
 spec:
-  replicas: 1
+  replicas: 0
   selector:
     matchLabels:
       app: learn
@@ -230,7 +230,7 @@ spec:
     - protocol: TCP
       port: 2181
       targetPort: 2181
-  type: ClusterIP
+  type: LoadBalancer
 
 ---
 
@@ -284,7 +284,7 @@ spec:
     - protocol: TCP
       port: 9092
       targetPort: 9092
-  type: ClusterIP
+  type: LoadBalancer
 
 ---
 
