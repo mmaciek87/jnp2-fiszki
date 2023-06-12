@@ -4,8 +4,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -20,7 +18,7 @@ public class LearnService {
             List<String> flashcardIds
     ) {
         flashcardIds.forEach(flashcardId -> {
-            userPerformanceRepository.findById(flashcardId).ifPresentOrElse(
+            userPerformanceRepository.findById(UserPerformanceDTO.generateId(userId, flashcardId)).ifPresentOrElse(
                     flashcard -> {
                         log.info("flashcard with id = {} is present", flashcardId);
                     },
